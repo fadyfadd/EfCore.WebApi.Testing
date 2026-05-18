@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TrainingCenterWebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ControllerBase
+
+    public class UserController : ApiBaseController
     {
-    
-        
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok("User controller is working!");
+        }
+
     }
 }
