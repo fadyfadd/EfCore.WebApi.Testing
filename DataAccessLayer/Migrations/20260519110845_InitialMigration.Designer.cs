@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(MainDataBaseContext))]
-    [Migration("20260519110705_InitialMigration")]
+    [Migration("20260519110845_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -25,13 +25,13 @@ namespace DataAccessLayer.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.HasSequence<int>("CourseCategorySequence")
+            modelBuilder.HasSequence<int>("course_category_sequence")
                 .StartsAt(1000L);
 
-            modelBuilder.HasSequence<int>("CourseSequence")
+            modelBuilder.HasSequence<int>("course_sequence")
                 .StartsAt(5000L);
 
-            modelBuilder.HasSequence<int>("StudentSequence");
+            modelBuilder.HasSequence<int>("student_sequence");
 
             modelBuilder.Entity("DataAccessLayer.Entities.ApplicationRole", b =>
                 {
@@ -143,7 +143,7 @@ namespace DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .HasDefaultValueSql("nextval('\"CourseSequence\"')");
+                        .HasDefaultValueSql("nextval('\"course_sequence\"')");
 
                     b.Property<int>("CourseCategoryId")
                         .HasColumnType("integer")
@@ -168,7 +168,7 @@ namespace DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .HasDefaultValueSql("nextval('\"CourseCategorySequence\"')");
+                        .HasDefaultValueSql("nextval('\"course_category_sequence\"')");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -187,7 +187,7 @@ namespace DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .HasDefaultValueSql("nextval('\"StudentSequence\"')");
+                        .HasDefaultValueSql("nextval('\"student_sequence\"')");
 
                     b.Property<string>("Email")
                         .IsRequired()

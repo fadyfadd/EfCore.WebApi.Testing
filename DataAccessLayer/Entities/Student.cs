@@ -11,6 +11,8 @@ namespace DataAccessLayer.Entities
         public string LastName { get; set; }
         public string Email { get; set; }
         public DateTime EnrolledAt { get; set; }
+        public ICollection<Course> Courses { get; set; } = new HashSet<Course>();
+
     }
 
 }

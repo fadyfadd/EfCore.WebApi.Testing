@@ -13,15 +13,15 @@ namespace DataAccessLayer.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateSequence<int>(
-                name: "CourseCategorySequence",
+                name: "course_category_sequence",
                 startValue: 1000L);
 
             migrationBuilder.CreateSequence<int>(
-                name: "CourseSequence",
+                name: "course_sequence",
                 startValue: 5000L);
 
             migrationBuilder.CreateSequence<int>(
-                name: "StudentSequence");
+                name: "student_sequence");
 
             migrationBuilder.CreateTable(
                 name: "application_roles",
@@ -70,7 +70,7 @@ namespace DataAccessLayer.Migrations
                 name: "courses_categories",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('\"CourseCategorySequence\"')"),
+                    id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('\"course_category_sequence\"')"),
                     name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -82,7 +82,7 @@ namespace DataAccessLayer.Migrations
                 name: "students",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('\"StudentSequence\"')"),
+                    id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('\"student_sequence\"')"),
                     first_name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     last_name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     email = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
@@ -203,7 +203,7 @@ namespace DataAccessLayer.Migrations
                 name: "courses",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('\"CourseSequence\"')"),
+                    id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('\"course_sequence\"')"),
                     title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     course_category_id = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -295,13 +295,13 @@ namespace DataAccessLayer.Migrations
                 name: "courses_categories");
 
             migrationBuilder.DropSequence(
-                name: "CourseCategorySequence");
+                name: "course_category_sequence");
 
             migrationBuilder.DropSequence(
-                name: "CourseSequence");
+                name: "course_sequence");
 
             migrationBuilder.DropSequence(
-                name: "StudentSequence");
+                name: "student_sequence");
         }
     }
 }

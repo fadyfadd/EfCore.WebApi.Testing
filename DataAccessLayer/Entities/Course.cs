@@ -9,8 +9,10 @@ namespace DataAccessLayer.Entities
         public int Id { get; set; }
         public string Title { get; set; }
 
-         public int CourseCategoryId { get; set; }
+        public int CourseCategoryId { get; set; }
 
-         public CourseCategory CourseCategory { get; set; }
+        public CourseCategory CourseCategory { get; set; }
+        public ICollection<Student> Students { get; set; } = new HashSet<Student>();
+
     }
 }
