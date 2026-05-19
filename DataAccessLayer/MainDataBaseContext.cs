@@ -15,6 +15,8 @@ namespace DataAccessLayer
 
         public DbSet<CourseCategory> CourseCategories { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Student> Students { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
