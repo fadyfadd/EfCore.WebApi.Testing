@@ -1,8 +1,10 @@
 using DataAccessLayer;
 using DataAccessLayer.Entities;
+using DataAccessLayer.Mappers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TrainingCenterWebApi;
+using TrainingCenterWebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -22,8 +24,8 @@ builder.Services.AddCors(options =>
 
 
 builder.Services.AddControllers();
-
-
+builder.Services.AddScoped<CourseService>();
+builder.Services.AddAutoMapper(cfg => { }, typeof(DefaultProfile).Assembly);
 
 builder.Services.AddDbContext<MainDataBaseContext>(options =>
     options.UseNpgsql(generalSettings.ConnectionString));
