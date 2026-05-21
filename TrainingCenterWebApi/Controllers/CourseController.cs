@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using TrainingCenterWebApi.Services;
 
 namespace TrainingCenterWebApi.Controllers
-{  
+{
     public class CourseController : ApiBaseController
     {
         CourseService CourseService;
@@ -17,9 +17,16 @@ namespace TrainingCenterWebApi.Controllers
         [HttpGet("/courses")]
         public async Task<ActionResult<List<CourseDto>>> GetAllCourses()
         {
-            var res =  await this.CourseService.GetAllCourses();          
-            return Ok(res);            
+            var res = await this.CourseService.GetAllCourses();
+            return Ok(res);
         }
-        
+
+        [HttpGet("/courses/enrollment")]
+        public async Task<ActionResult<List<CourseDto>>> GetCoursesEnrollment()
+        {
+            var res = await this.CourseService.GetCoursesEnrollment();
+            return Ok(res);
+
+        }
     }
 }
