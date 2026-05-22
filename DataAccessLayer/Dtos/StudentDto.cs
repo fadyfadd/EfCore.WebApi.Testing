@@ -2,13 +2,13 @@ using System;
 
 namespace DataAccessLayer.Dtos;
 
-    public class StudentDto
-    {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public DateTime EnrolledAt { get; set; }
-        public ICollection<CourseDto> Courses { get; set; } = new HashSet<CourseDto>();
+public class StudentDto
+{
+    public int? Id { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? Email { get; set; }
+    public DateTime? EnrolledAt { get; set; }
+    public ICollection<CourseDto>? Courses { get; set; } = new HashSet<CourseDto>();
 
-    }
+}

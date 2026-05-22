@@ -23,7 +23,11 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers() .ConfigureApiBehaviorOptions(options =>
+    {
+       // options.SuppressModelStateInvalidFilter = true;
+    });
+
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddAutoMapper(cfg => { }, typeof(DefaultProfile).Assembly);
 
@@ -47,7 +51,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    //app.MapOpenApi();
 }
 
 app.UseCors(MyAllowSpecificOrigins);
