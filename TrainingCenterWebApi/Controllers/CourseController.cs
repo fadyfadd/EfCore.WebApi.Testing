@@ -21,12 +21,12 @@ namespace TrainingCenterWebApi.Controllers
             return Ok(res);
         }
 
-        [HttpGet("/courses/enrollments")]
-        public async Task<ActionResult<List<CourseDto>>> GetCoursesEnrollment()
-        {
-            var res = await this.CourseService.GetCoursesEnrollment();
-            return Ok(res);
-        }
+        // [HttpGet("/courses/enrollments")]
+        // public async Task<ActionResult<List<CourseDto>>> GetCoursesEnrollment()
+        // {
+        //     var res = await this.CourseService.GetCoursesEnrollment();
+        //     return Ok(res);
+        // }
 
         [HttpPost("/courseCategory/add")]
         public async Task<ActionResult<CourseCategoryDto>> AddCourseCategory([FromBody] CourseCategoryDto courseCategoryDto)

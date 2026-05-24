@@ -9,8 +9,8 @@ public class DefaultProfile : Profile
 {
     public DefaultProfile()
     {
-        CreateMap<Course, CourseDto>().ForMember(dest=>dest.Students, opt=>opt.Ignore()).ReverseMap();
-        CreateMap<CourseCategory, CourseCategoryDto>().ForMember(dest=>dest.Courses, opt=>opt.Ignore()).ReverseMap();
-        CreateMap<Student, StudentDto>().ForMember(dest=>dest.Courses, opt=>opt.Ignore()).ReverseMap();
+        CreateMap<Course, CourseDto>().ReverseMap();
+        CreateMap<CourseCategory, CourseCategoryDto>().ReverseMap();
+        CreateMap<Student, StudentDto>().ReverseMap();
     }
 }
