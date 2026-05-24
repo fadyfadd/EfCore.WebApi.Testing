@@ -23,19 +23,25 @@ namespace DataAccessLayer.Configuration
                .IsRequired()
                .HasMaxLength(50);
 
+            builder.Property(s => s.UserId)
+                .HasColumnName("user_id")
+                .IsRequired();
+
             builder.Property(s => s.LastName)
                 .HasColumnName("last_name")
                 .IsRequired()
                 .HasMaxLength(50);
-
-            builder.Property(s => s.Email)
-                .HasColumnName("email")
-                .IsRequired()
-                .HasMaxLength(150);
-
+ 
             builder.Property(s => s.EnrolledAt)
                 .HasColumnName("enrolled_at")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            builder.HasOne(s => s.User)
+                .WithOne()
+                .HasForeignKey<Student>(s => s.UserId)
+                .HasPrincipalKey<ApplicationUser>(u => u.Id)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             builder.HasMany(s => s.Courses)
                    .WithMany(c => c.Students)
@@ -61,7 +67,7 @@ namespace DataAccessLayer.Configuration
                        });
 
 
-
+           
         }
     }
 }

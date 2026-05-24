@@ -16,7 +16,7 @@ namespace DataAccessLayer
         public DbSet<CourseCategory> CourseCategories { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Student> Students { get; set; }
-        
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -34,11 +34,11 @@ namespace DataAccessLayer
             builder.Entity<IdentityUserToken<int>>(b => b.ToTable("application_user_tokens"));
 
             builder.HasSequence<int>("course_category_sequence")
-             .StartsAt(1000)
+             .StartsAt(1)
              .IncrementsBy(1);
 
             builder.HasSequence<int>("course_sequence")
-                .StartsAt(5000)
+                .StartsAt(1)
                 .IncrementsBy(1);
 
             builder.HasSequence<int>("student_sequence")

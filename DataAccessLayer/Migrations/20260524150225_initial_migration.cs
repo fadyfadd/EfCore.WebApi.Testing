@@ -7,18 +7,16 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccessLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class initial_migration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateSequence<int>(
-                name: "course_category_sequence",
-                startValue: 1000L);
+                name: "course_category_sequence");
 
             migrationBuilder.CreateSequence<int>(
-                name: "course_sequence",
-                startValue: 5000L);
+                name: "course_sequence");
 
             migrationBuilder.CreateSequence<int>(
                 name: "student_sequence");
@@ -76,21 +74,6 @@ namespace DataAccessLayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_courses_categories", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "students",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('\"student_sequence\"')"),
-                    first_name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    last_name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    email = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    enrolled_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_students", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,6 +183,27 @@ namespace DataAccessLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "students",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('\"student_sequence\"')"),
+                    first_name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    last_name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    enrolled_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    user_id = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_students", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_students_application_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "application_users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "courses",
                 columns: table => new
                 {
@@ -216,6 +220,30 @@ namespace DataAccessLayer.Migrations
                         principalTable: "courses_categories",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "courses_students",
+                columns: table => new
+                {
+                    student_id = table.Column<int>(type: "integer", nullable: false),
+                    course_id = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_courses_students", x => new { x.student_id, x.course_id });
+                    table.ForeignKey(
+                        name: "FK_courses_students_courses_course_id",
+                        column: x => x.course_id,
+                        principalTable: "courses",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_courses_students_students_student_id",
+                        column: x => x.student_id,
+                        principalTable: "students",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -259,6 +287,17 @@ namespace DataAccessLayer.Migrations
                 name: "IX_courses_course_category_id",
                 table: "courses",
                 column: "course_category_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_courses_students_course_id",
+                table: "courses_students",
+                column: "course_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_students_user_id",
+                table: "students",
+                column: "user_id",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -280,19 +319,22 @@ namespace DataAccessLayer.Migrations
                 name: "application_user_tokens");
 
             migrationBuilder.DropTable(
+                name: "courses_students");
+
+            migrationBuilder.DropTable(
+                name: "application_roles");
+
+            migrationBuilder.DropTable(
                 name: "courses");
 
             migrationBuilder.DropTable(
                 name: "students");
 
             migrationBuilder.DropTable(
-                name: "application_roles");
+                name: "courses_categories");
 
             migrationBuilder.DropTable(
                 name: "application_users");
-
-            migrationBuilder.DropTable(
-                name: "courses_categories");
 
             migrationBuilder.DropSequence(
                 name: "course_category_sequence");

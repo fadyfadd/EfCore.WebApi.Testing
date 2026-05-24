@@ -22,11 +22,9 @@ namespace DataAccessLayer.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.HasSequence<int>("course_category_sequence")
-                .StartsAt(1000L);
+            modelBuilder.HasSequence<int>("course_category_sequence");
 
-            modelBuilder.HasSequence<int>("course_sequence")
-                .StartsAt(5000L);
+            modelBuilder.HasSequence<int>("course_sequence");
 
             modelBuilder.HasSequence<int>("student_sequence");
 
@@ -203,12 +201,6 @@ namespace DataAccessLayer.Migrations
                         .HasColumnName("id")
                         .HasDefaultValueSql("nextval('\"student_sequence\"')");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)")
-                        .HasColumnName("email");
-
                     b.Property<DateTime>("EnrolledAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
@@ -227,7 +219,14 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("last_name");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("students", (string)null);
                 });
@@ -359,6 +358,17 @@ namespace DataAccessLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("CourseCategory");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Entities.Student", b =>
+                {
+                    b.HasOne("DataAccessLayer.Entities.ApplicationUser", "User")
+                        .WithOne()
+                        .HasForeignKey("DataAccessLayer.Entities.Student", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

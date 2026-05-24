@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(MainDataBaseContext))]
-    [Migration("20260519110845_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20260524150225_initial_migration")]
+    partial class initial_migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,13 +25,28 @@ namespace DataAccessLayer.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.HasSequence<int>("course_category_sequence")
-                .StartsAt(1000L);
+            modelBuilder.HasSequence<int>("course_category_sequence");
 
-            modelBuilder.HasSequence<int>("course_sequence")
-                .StartsAt(5000L);
+            modelBuilder.HasSequence<int>("course_sequence");
 
             modelBuilder.HasSequence<int>("student_sequence");
+
+            modelBuilder.Entity("CourseStudent", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer")
+                        .HasColumnName("student_id");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("integer")
+                        .HasColumnName("course_id");
+
+                    b.HasKey("StudentId", "CourseId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("courses_students", (string)null);
+                });
 
             modelBuilder.Entity("DataAccessLayer.Entities.ApplicationRole", b =>
                 {
@@ -189,12 +204,6 @@ namespace DataAccessLayer.Migrations
                         .HasColumnName("id")
                         .HasDefaultValueSql("nextval('\"student_sequence\"')");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)")
-                        .HasColumnName("email");
-
                     b.Property<DateTime>("EnrolledAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
@@ -213,7 +222,14 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("last_name");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("students", (string)null);
                 });
@@ -321,6 +337,21 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("application_user_tokens", (string)null);
                 });
 
+            modelBuilder.Entity("CourseStudent", b =>
+                {
+                    b.HasOne("DataAccessLayer.Entities.Course", null)
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataAccessLayer.Entities.Student", null)
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DataAccessLayer.Entities.Course", b =>
                 {
                     b.HasOne("DataAccessLayer.Entities.CourseCategory", "CourseCategory")
@@ -330,6 +361,17 @@ namespace DataAccessLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("CourseCategory");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Entities.Student", b =>
+                {
+                    b.HasOne("DataAccessLayer.Entities.ApplicationUser", "User")
+                        .WithOne()
+                        .HasForeignKey("DataAccessLayer.Entities.Student", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
