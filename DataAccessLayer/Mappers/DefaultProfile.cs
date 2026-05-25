@@ -12,5 +12,6 @@ public class DefaultProfile : Profile
         CreateMap<Course, CourseDto>().ReverseMap();
         CreateMap<CourseCategory, CourseCategoryDto>().ReverseMap();
         CreateMap<Student, StudentDto>().ReverseMap();
+        CreateMap<ApplicationUser, ApplicationUserDto>().ReverseMap();
     }
 }

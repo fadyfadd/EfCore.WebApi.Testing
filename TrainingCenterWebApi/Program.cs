@@ -24,12 +24,18 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.Services.AddControllers() .ConfigureApiBehaviorOptions(options =>
+builder.Services.AddControllers().AddJsonOptions(options =>
     {
-       // options.SuppressModelStateInvalidFilter = true;
+        // Automatically attaches your custom trimmer engine
+        options.JsonSerializerOptions.Converters.Add(new ReadyStringTrimmerConverter());
+    }).ConfigureApiBehaviorOptions(options =>
+    {
+
     });
 
 builder.Services.AddScoped<CourseService>();
+builder.Services.AddScoped<UserService>();
+
 builder.Services.AddAutoMapper(cfg => { }, typeof(DefaultProfile).Assembly);
 
 builder.Services.AddDbContext<MainDataBaseContext>(options =>
@@ -53,12 +59,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
-app.UseMiddleware<MyCustomMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 

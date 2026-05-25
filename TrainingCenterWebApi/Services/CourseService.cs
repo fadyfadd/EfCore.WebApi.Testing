@@ -25,7 +25,6 @@ namespace TrainingCenterWebApi.Services
             return res;
         }
 
-
         public async Task<CourseCategoryDto> AddCategory(CourseCategoryDto courseCategoryDto)
         {
             var courseCategory = new CourseCategory
