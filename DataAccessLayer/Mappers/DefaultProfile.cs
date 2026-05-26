@@ -9,9 +9,19 @@ public class DefaultProfile : Profile
 {
     public DefaultProfile()
     {
-        CreateMap<Course, CourseDto>().ReverseMap();
-        CreateMap<CourseCategory, CourseCategoryDto>().ReverseMap();
-        CreateMap<Student, StudentDto>().ReverseMap();
-        CreateMap<ApplicationUser, ApplicationUserDto>().ReverseMap();
+
+        CreateMap<BaseCourseCategoryDto, CourseCategory>().ReverseMap();
+        CreateMap<CourseCategoryDto, CourseCategory>().ReverseMap();
+
+
+        CreateMap<BaseCourseDto, Course>().ReverseMap();
+        CreateMap<CourseDto, Course>().ReverseMap();
+        CreateMap<CourseWithStudentsDto, Course>().ReverseMap();
+
+        CreateMap<BaseStudentDto, Student>().ReverseMap();
+        CreateMap<StudentDto, Student>().ReverseMap();
+
+        CreateMap<BaseApplicationUserDto, ApplicationUser>().ReverseMap();
+        CreateMap<ApplicationUserDto, ApplicationUser>().ReverseMap();
     }
 }

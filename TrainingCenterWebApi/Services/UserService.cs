@@ -51,6 +51,7 @@ public class UserService
 
         var res = mapper.Map<ApplicationUserDto>(applicationUser);
         var studentDto = mapper.Map<StudentDto>(student);
+        res.PlainPassword = "";
         res.Student = studentDto;
 
         await transaction.CommitAsync();

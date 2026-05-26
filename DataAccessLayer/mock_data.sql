@@ -16,3 +16,10 @@ Insert Into courses ("title" , "course_category_id") values ('DevOps Essentials'
 Insert Into courses ("title" , "course_category_id") values ('Data Structures Fundamentals', 1);
 Insert Into courses ("title" , "course_category_id") values ('Algorithms Basics', 1);
 Insert Into courses ("title" , "course_category_id") values ('React for Beginners', 1);
+
+
+Insert Into courses_students ("student_id" , "course_id") values (1, 1);
+Insert Into courses_students ("student_id" , "course_id") values (1, 2);
+Insert Into courses_students ("student_id" , "course_id") values (1, 3);
+Insert Into courses_students ("student_id" , "course_id") values (1, 4);
+Insert Into courses_students ("student_id" , "course_id") values (1, 5);

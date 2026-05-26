@@ -3,7 +3,7 @@ using DataAccessLayer;
 using DataAccessLayer.Dtos;
 using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
- 
+
 
 namespace TrainingCenterWebApi.Services
 {
@@ -43,7 +43,7 @@ namespace TrainingCenterWebApi.Services
             var entity = await dataContext.CourseCategories.FindAsync(courseCategoryDto.Id);
             entity.Name = courseCategoryDto.Name;
             var res = mapper.Map<CourseCategoryDto>(entity);
-            dataContext.SaveChanges(); 
+            dataContext.SaveChanges();
             return res;
         }
 
@@ -54,7 +54,7 @@ namespace TrainingCenterWebApi.Services
             dataContext.CourseCategories.Remove(courseCategory);
             await dataContext.SaveChangesAsync();
             var res = mapper.Map<CourseCategoryDto>(courseCategory);
-            dataContext.SaveChanges(); 
+            dataContext.SaveChanges();
             return res;
         }
 
@@ -93,20 +93,13 @@ namespace TrainingCenterWebApi.Services
 
         }
 
-        // public async Task<List<CourseDto>> GetCoursesEnrollment()
-        // {
-        //     var courses = await dataContext.Courses.Include(a => a.Students).Include(a => a.CourseCategory).ToListAsync();
-        //     List<CourseDto> output = new List<CourseDto>();
+        public async Task<List<CourseWithStudentsDto>> GetCoursesEnrollment()
+        {
+            var courses = await dataContext.Courses.Include(a => a.Students).Include(a => a.CourseCategory).ToListAsync();
+            List<CourseDto> output = new List<CourseDto>();
+            var res = mapper.Map<List<CourseWithStudentsDto>>(courses);
+           return res;
 
-        //      foreach (var course in courses) {
-        //         var courseDto = mapper.Map<CourseDto>(course);
-        //         var studentDtos = mapper.Map<List<StudentDto>>(course.Students);
-        //         courseDto.Students.AddRange(studentDtos);
-        //         output.Add(courseDto);
-        //     }
-
-        //     return output; 
-           
-        // }
+        }
     }
 }
