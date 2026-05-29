@@ -15,7 +15,7 @@ namespace TrainingCenterWebApi.Controllers
             this.CourseService = courseService;
         }
 
-        [Authorize]
+        //[Authorize(Roles = "Student")]
         [HttpGet("courses")]
         public async Task<ActionResult<List<CourseDto>>> GetAllCourses()
         {

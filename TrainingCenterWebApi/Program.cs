@@ -26,11 +26,24 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => { options.User.RequireUniqueEmail = true; })
+    .AddEntityFrameworkStores<MainDataBaseContext>()
+    .AddDefaultTokenProviders();
+
+
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
 .AddJwtBearer(options =>
 {
+    Console.WriteLine("JwtBearer configuration executed");
+
     string secretKey = generalSettings.JwtSettings.Key;
-    var keyBytes = Encoding.UTF8.GetBytes(secretKey); 
+    var keyBytes = Encoding.UTF8.GetBytes(secretKey);
+
 
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -38,19 +51,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
         IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
 
-        //ValidateIssuer = true,
+        ValidateIssuer = true,
         ValidIssuer = generalSettings.JwtSettings.Issuer,
 
-        //ValidateAudience = true,
+        ValidateAudience = true,
         ValidAudience = generalSettings.JwtSettings.Audience,
 
-        //ValidateLifetime = true,
-        //RequireExpirationTime = true,
-        //ClockSkew = TimeSpan.Zero
+        ValidateLifetime = true,
+        RequireExpirationTime = true,
+        ClockSkew = TimeSpan.Zero
     };
 });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization((options) =>
+{
+    Console.WriteLine("Authorization configuration executed");
+});
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<RequestProfilingFilter>();
@@ -74,9 +90,7 @@ builder.Services.AddDbContext<MainDataBaseContext>(options =>
     options.UseNpgsql(generalSettings.ConnectionString));
 
 
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => { options.User.RequireUniqueEmail = true; })
-    .AddEntityFrameworkStores<MainDataBaseContext>()
-    .AddDefaultTokenProviders();
+
 
 builder.Services.AddSwaggerGen();
 

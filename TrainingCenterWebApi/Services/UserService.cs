@@ -162,9 +162,12 @@ public class UserService
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
-        return jwtTokenServices.CreateToken(claims, generalSettings.JwtSettings.ExpiryInMinutes);
+        var tokenDto =  jwtTokenServices.CreateToken(claims, generalSettings.JwtSettings.ExpiryInMinutes);
+        tokenDto.FirstName = student.FirstName;
+        tokenDto.LastName = student.LastName;
+        tokenDto.Role = UserRole.Student;   
 
-   
+        return tokenDto;
     }
 
 

@@ -11,24 +11,23 @@ namespace TrainingCenterWebApi.Infrastructure;
 public class JwtTokenServices
 {
 
-    private readonly GeneralSettings _configuration;
+    private readonly GeneralSettings generalSettings;
 
     public JwtTokenServices(IOptions<GeneralSettings> generalSettings)
     {
-        _configuration = generalSettings.Value;
+        this.generalSettings = generalSettings.Value;
     }
-
 
     public JwtTokenDto CreateToken(List<Claim> customClaims, int expiryInMinutes = 20)
     {
-        var secretKey = _configuration.JwtSettings.Key;
-        var issuer = _configuration.JwtSettings.Issuer;
-        var audience = _configuration.JwtSettings.Audience;
+        var secretKey = generalSettings.JwtSettings.Key;
+        var issuer = generalSettings.JwtSettings.Issuer;
+        var audience = generalSettings.JwtSettings.Audience;
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var expirationDate = DateTime.UtcNow.AddMinutes(expiryInMinutes); 
+        var expirationDate = DateTime.UtcNow.AddMinutes(expiryInMinutes);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(customClaims),
@@ -44,10 +43,9 @@ public class JwtTokenServices
         return new JwtTokenDto()
         {
             Token = tokenHandler.WriteToken(token),
-            Expiration =  expirationDate 
+            Expiration = expirationDate            
         };
 
     }
-
 
 }
