@@ -3,6 +3,7 @@ using System;
 using DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(MainDataBaseContext))]
-    partial class MainDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20260530135232_4f469cba-274e-4f51-b856-11f876f2d242")]
+    partial class _4f469cba274e4f51b85611f876f2d242
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,6 +193,9 @@ namespace DataAccessLayer.Migrations
                         .HasColumnName("id")
                         .HasDefaultValueSql("nextval('\"course_sequence\"')");
 
+                    b.Property<int?>("AdministratorId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("CourseCategoryId")
                         .HasColumnType("integer")
                         .HasColumnName("course_category_id");
@@ -201,6 +207,8 @@ namespace DataAccessLayer.Migrations
                         .HasColumnName("title");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AdministratorId");
 
                     b.HasIndex("CourseCategoryId");
 
@@ -395,6 +403,10 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("DataAccessLayer.Entities.Course", b =>
                 {
+                    b.HasOne("DataAccessLayer.Entities.Administrator", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("AdministratorId");
+
                     b.HasOne("DataAccessLayer.Entities.CourseCategory", "CourseCategory")
                         .WithMany("Courses")
                         .HasForeignKey("CourseCategoryId")
@@ -464,6 +476,11 @@ namespace DataAccessLayer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Entities.Administrator", b =>
+                {
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Entities.CourseCategory", b =>

@@ -33,7 +33,7 @@ namespace TrainingCenterWebApi.Controllers
         [HttpPut("student/updateEmail")]
         public async Task<ActionResult<ApplicationUserDto>> UpdateStudentEmail([FromBody] ApplicationUserDto applicationUserDto)
         {
-            var res = await userService.UpdateStudentEmail(applicationUserDto);
+            var res = await userService.UpdateUserEmail(applicationUserDto);
             return Ok(res);
 
         }

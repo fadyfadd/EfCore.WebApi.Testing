@@ -17,6 +17,8 @@ namespace DataAccessLayer
         public DbSet<Course> Courses { get; set; }
         public DbSet<Student> Students { get; set; }
 
+        public DbSet<Administrator> Administrators { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -41,6 +43,8 @@ namespace DataAccessLayer
             builder.HasSequence<int>("course_sequence")
                 .StartsAt(1)
                 .IncrementsBy(1);
+
+            builder.HasSequence<int>("administarator_sequence").StartsAt(1).IncrementsBy(1);
 
             builder.HasSequence<int>("student_sequence")
            .StartsAt(1)

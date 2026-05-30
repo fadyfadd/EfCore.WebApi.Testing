@@ -89,7 +89,7 @@ public class UserService
 
     }
 
-    public async Task<ApplicationUserDto> UpdateStudentEmail(ApplicationUserDto applicationUserDto)
+    public async Task<ApplicationUserDto> UpdateUserEmail(ApplicationUserDto applicationUserDto)
     {
 
         var user = await userManager.FindByNameAsync(applicationUserDto.UserName);
@@ -149,25 +149,48 @@ public class UserService
         if (student != null)
         {
             userDto.Student = mapper.Map<StudentDto>(student);
-        }
-        else
-        {
-            throw new BusinessException("4455ebd2", "Invalid Credentials", null, null);
-        }
 
-        List<Claim> claims = new() {
+            List<Claim> claims = new() {
             new Claim(ClaimTypes.Name, loginDto.UserName),
             new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, "Student"),
+            new Claim(ClaimTypes.Role, UserRole.Student.ToString()),
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
-        var tokenDto = jwtTokenServices.CreateToken(claims, generalSettings.JwtSettings.ExpiryInMinutes);
-        tokenDto.FirstName = student.FirstName;
-        tokenDto.LastName = student.LastName;
-        tokenDto.Role = UserRole.Student;
+            var tokenDto = jwtTokenServices.CreateToken(claims, generalSettings.JwtSettings.ExpiryInMinutes);
+            tokenDto.FirstName = student.FirstName;
+            tokenDto.LastName = student.LastName;
+            tokenDto.Role = UserRole.Student;
 
-        return tokenDto;
+            return tokenDto;
+
+        }
+        else
+        {
+            var administrator = dbContext.Administrators.FirstOrDefault(a => a.UserId == user.Id);
+
+            if (administrator != null)
+            {
+                List<Claim> claims = new() {
+                new Claim(ClaimTypes.Name, loginDto.UserName),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, UserRole.Administrator.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                };
+
+                var tokenDto = jwtTokenServices.CreateToken(claims, generalSettings.JwtSettings.ExpiryInMinutes);
+                tokenDto.FirstName = administrator.FirstName;
+                tokenDto.LastName = administrator.LastName;
+                tokenDto.Role = UserRole.Administrator;
+
+                return tokenDto;
+
+            }
+        }
+
+        throw new BusinessException("4455ebd2", "Invalid Credentials", null, null);
+
+
     }
 
 

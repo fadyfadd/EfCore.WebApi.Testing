@@ -3,6 +3,7 @@ using System;
 using DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(MainDataBaseContext))]
-    partial class MainDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20260530134913_b782c5d1-52ea-4a6c-940f-7f7243c22da2")]
+    partial class b782c5d152ea4a6c940f7f7243c22da2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,8 +24,6 @@ namespace DataAccessLayer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.HasSequence<int>("administarator_sequence");
 
             modelBuilder.HasSequence<int>("course_category_sequence");
 
@@ -45,44 +46,6 @@ namespace DataAccessLayer.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("courses_students", (string)null);
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Entities.Administrator", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .HasDefaultValueSql("nextval('\"administarator_sequence\"')");
-
-                    b.Property<DateTime>("EnrolledAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("enrolled_at")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("first_name");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("last_name");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("administrators", (string)null);
                 });
 
             modelBuilder.Entity("DataAccessLayer.Entities.ApplicationRole", b =>
@@ -380,17 +343,6 @@ namespace DataAccessLayer.Migrations
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Entities.Administrator", b =>
-                {
-                    b.HasOne("DataAccessLayer.Entities.ApplicationUser", "User")
-                        .WithOne()
-                        .HasForeignKey("DataAccessLayer.Entities.Administrator", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Entities.Course", b =>
