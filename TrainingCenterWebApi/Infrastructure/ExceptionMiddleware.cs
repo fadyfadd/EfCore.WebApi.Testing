@@ -2,6 +2,7 @@
 {
     using DataAccessLayer.Exceptions;
     using Microsoft.AspNetCore.Http;
+    using System.Diagnostics;
     using System.Threading.Tasks;
 
     public class ExceptionMiddleware
@@ -23,8 +24,13 @@
             {
                 if (ex is BusinessException businessException)
                 {
+                    String stack = null;
+                    
+                    if (businessException.InnerException != null && Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+                        stack = businessException.InnerException.StackTrace;
+
                     context.Response.StatusCode = 400;
-                    await context.Response.WriteAsJsonAsync(new { ServerCode = businessException.ServerCode, Message = businessException.Message, Errors = businessException.Errors });
+                    await context.Response.WriteAsJsonAsync(new { ServerCode = businessException.ServerCode, Message = businessException.Message, Errors = businessException.Errors , StackTrace=stack });
 
                     if (ex.InnerException != null)
                     {
