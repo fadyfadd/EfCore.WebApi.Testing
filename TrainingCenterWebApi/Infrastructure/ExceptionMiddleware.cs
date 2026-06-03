@@ -2,16 +2,19 @@
 {
     using DataAccessLayer.Exceptions;
     using Microsoft.AspNetCore.Http;
-    using System.Diagnostics;
     using System.Threading.Tasks;
 
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
+        
+        
+        private readonly ILogger<ExceptionMiddleware> _logger;
 
-        public ExceptionMiddleware(RequestDelegate next)
+        public ExceptionMiddleware(RequestDelegate next , ILogger<ExceptionMiddleware> logger)
         {
             _next = next;
+            _logger = logger; 
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -24,34 +27,18 @@
             {
                 if (ex is BusinessException businessException)
                 {
-                    String stack = null;
-                    
-                    if (businessException.InnerException != null && Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
-                        stack = businessException.InnerException.StackTrace;
-
                     context.Response.StatusCode = 400;
-                    await context.Response.WriteAsJsonAsync(new { ServerCode = businessException.ServerCode, Message = businessException.Message, Errors = businessException.Errors , StackTrace=stack });
+                    await context.Response.WriteAsJsonAsync(new { ServerCode = businessException.ServerCode, Message = businessException.Message, Errors = businessException.Errors});
 
-                    if (ex.InnerException != null)
-                    {
-                        // Logging the inner exception details for debugging purposes
+                    if (ex.InnerException != null) {
+                        _logger.LogError(ex.InnerException , ex.Message);
                     }
-
                 }
                 else
                 {
-                    if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
-                    {
-                        //Loggin the exception details for debugging purposes
-                        context.Response.StatusCode = 500;
-                        await context.Response.WriteAsJsonAsync(new { Message = ex.Message, StackTrace = ex.StackTrace });
-                    }
-                    else
-                    {   //Loggin the exception details for debugging purposes
-                        context.Response.StatusCode = 500;
-                        await context.Response.WriteAsJsonAsync(new { Message = "An error occurred while processing your request." });
-                    }
-
+                    context.Response.StatusCode = 500;
+                    await context.Response.WriteAsJsonAsync(new { Message = "An error occurred while processing your request." });
+                    _logger.LogError(ex , ex.Message);
                 }
 
             }
