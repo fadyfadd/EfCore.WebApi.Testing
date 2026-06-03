@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using TrainingCenterWebApi;
 using TrainingCenterWebApi.Infrastructure;
 using TrainingCenterWebApi.Services;
@@ -14,6 +15,13 @@ var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var configuration = builder.Configuration;
 var generalSettings = configuration.GetSection(GeneralSettings.sectionName).Get<GeneralSettings>();
+
+builder.Host.UseSerilog((context, loggerConfiguration) =>
+{
+    loggerConfiguration.ReadFrom.Configuration(context.Configuration);
+});
+
+
 
 builder.Services.AddCors(options =>
 {
