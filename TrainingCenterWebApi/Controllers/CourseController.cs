@@ -1,8 +1,7 @@
 using DataAccessLayer;
 using DataAccessLayer.Dtos;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+ using Microsoft.AspNetCore.Mvc;
 using TrainingCenterWebApi.Services;
 
 namespace TrainingCenterWebApi.Controllers

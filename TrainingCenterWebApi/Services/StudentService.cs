@@ -1,5 +1,4 @@
-using System;
-using AutoMapper;
+ using AutoMapper;
 using DataAccessLayer;
 
 namespace TrainingCenterWebApi.Services;

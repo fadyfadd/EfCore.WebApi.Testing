@@ -1,5 +1,4 @@
 ﻿using DataAccessLayer.Dtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrainingCenterWebApi.Services;
 
