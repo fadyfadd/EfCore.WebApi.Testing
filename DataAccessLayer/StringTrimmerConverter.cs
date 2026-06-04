@@ -5,7 +5,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
- public class ReadyStringTrimmerConverter : JsonConverter<string>
+ public class StringTrimmerConverter : JsonConverter<string>
 {
     public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {

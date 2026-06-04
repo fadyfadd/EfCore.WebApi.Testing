@@ -82,7 +82,7 @@ builder.Services.AddControllers(options =>
 
 .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.Converters.Add(new ReadyStringTrimmerConverter());
+        options.JsonSerializerOptions.Converters.Add(new StringTrimmerConverter());
     }).ConfigureApiBehaviorOptions(options =>
     {
 
