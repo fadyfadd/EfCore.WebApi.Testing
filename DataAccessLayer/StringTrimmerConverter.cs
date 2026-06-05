@@ -1,5 +1,5 @@
  
-namespace DataAccessLayer;
+namespace Data;
 
 using System;
 using System.Text.Json;

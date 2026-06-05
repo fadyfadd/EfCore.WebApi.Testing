@@ -1,5 +1,5 @@
 
-namespace DataAccessLayer.Exceptions;
+namespace Data.Exceptions;
 
 public class BusinessException : Exception
 {

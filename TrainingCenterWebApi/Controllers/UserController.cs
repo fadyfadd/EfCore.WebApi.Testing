@@ -1,5 +1,6 @@
 ﻿using Api.Services;
-using DataAccessLayer.Dtos;
+using Data.Dtos;
+ 
 using Microsoft.AspNetCore.Mvc;
  
 namespace Api.Controllers

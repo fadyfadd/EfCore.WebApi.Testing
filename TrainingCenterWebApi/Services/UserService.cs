@@ -1,10 +1,11 @@
  using System.Security.Claims;
 using Api.Infrastructure;
 using AutoMapper;
-using DataAccessLayer;
-using DataAccessLayer.Dtos;
-using DataAccessLayer.Entities;
-using DataAccessLayer.Exceptions;
+using Data;
+using Data.Dtos;
+using Data.Entities;
+using Data.Exceptions;
+ 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

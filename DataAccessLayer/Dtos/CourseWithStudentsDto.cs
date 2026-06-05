@@ -1,6 +1,6 @@
 
 
-namespace DataAccessLayer.Dtos;
+namespace Data.Dtos;
 
 public class CourseWithStudentsDto : CourseDto
 {    

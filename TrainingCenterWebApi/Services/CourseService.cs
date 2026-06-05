@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DataAccessLayer;
-using DataAccessLayer.Dtos;
-using DataAccessLayer.Entities;
+using Data;
+using Data.Dtos;
+using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 

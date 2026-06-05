@@ -1,8 +1,9 @@
- using AutoMapper;
-using DataAccessLayer.Dtos;
-using DataAccessLayer.Entities;
+using AutoMapper;
+using Data.Dtos;
+using Data.Entities;
 
-namespace DataAccessLayer.Mappers;
+
+namespace Data.Mappers;
 
 public class DefaultProfile : Profile
 {

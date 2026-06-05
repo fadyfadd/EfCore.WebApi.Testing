@@ -1,9 +1,9 @@
-﻿using DataAccessLayer.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Data.Entities;
+ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 
-namespace DataAccessLayer.Configuration
+namespace Data.Configuration
 {
     public class StudentConfiguration : IEntityTypeConfiguration<Student>
     {

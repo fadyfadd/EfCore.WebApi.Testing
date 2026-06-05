@@ -1,11 +1,12 @@
 ﻿using Api.Services;
+using Data;
 using DataAccessLayer;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Transactions;
 
-namespace TestProject.TrainingCenterWebApi.Services
+namespace TestProject.Api.Services
 {
     public class CourseServiceTest : IClassFixture<WebApplicationFactory<Program>>
     {

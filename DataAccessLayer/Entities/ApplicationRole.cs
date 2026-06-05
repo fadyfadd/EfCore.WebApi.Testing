@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
 
-namespace DataAccessLayer.Entities
+namespace Data.Entities
 {
     public class ApplicationRole : IdentityRole<int>
     {

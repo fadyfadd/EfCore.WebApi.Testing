@@ -1,6 +1,6 @@
 ﻿
 
-namespace DataAccessLayer.Entities
+namespace Data.Entities
 {
     public class Student
     {

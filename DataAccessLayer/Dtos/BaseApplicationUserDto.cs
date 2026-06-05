@@ -1,7 +1,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace DataAccessLayer.Dtos;
+namespace Data.Dtos;
 
 public class BaseApplicationUserDto
 {

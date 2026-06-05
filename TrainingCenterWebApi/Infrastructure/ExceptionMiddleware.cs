@@ -1,6 +1,6 @@
 ﻿namespace Api.Infrastructure
 {
-    using DataAccessLayer.Exceptions;
+    using Data.Exceptions;
     using Microsoft.AspNetCore.Http;
     using System.Threading.Tasks;
 

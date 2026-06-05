@@ -1,6 +1,6 @@
 using Api.Services;
-using DataAccessLayer;
-using DataAccessLayer.Dtos;
+using Data;
+using Data.Dtos; 
 using Microsoft.AspNetCore.Authorization;
  using Microsoft.AspNetCore.Mvc;
  

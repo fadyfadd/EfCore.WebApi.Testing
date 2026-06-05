@@ -1,9 +1,9 @@
-﻿using DataAccessLayer.Entities;
+﻿using Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
  
-namespace DataAccessLayer
+namespace Data
 {
     public class MainDataBaseContext : IdentityDbContext<
         ApplicationUser,
