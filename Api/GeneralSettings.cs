@@ -13,7 +13,7 @@
     {
         public const String sectionName = "GeneralSettings";
         public required String ConnectionString { get; set; }
-
+        public required String StudentDocumentsFolderName { get; set; }
         public required String CorsAllowedOrigins { get; set; }
         public JwtSettings JwtSettings { get; set; }
     }
