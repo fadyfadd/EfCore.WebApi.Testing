@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(MainDataBaseContext))]
-    partial class MainDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20260606122547_3d9f8c62-1b7a-4c92-bd14-8f53cb2e6f47")]
+    partial class _3d9f8c621b7a4c92bd148f53cb2e6f47
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,8 +32,6 @@ namespace DataAccessLayer.Migrations
             modelBuilder.HasSequence<int>("course_sequence");
 
             modelBuilder.HasSequence<int>("student_document_sequence");
-
-            modelBuilder.HasSequence<int>("student_sequence");
 
             modelBuilder.Entity("CourseStudent", b =>
                 {

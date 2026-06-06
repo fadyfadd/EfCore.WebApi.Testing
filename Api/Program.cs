@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
- 
+
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -48,7 +48,6 @@ builder.Services.AddAuthentication(options =>
     })
 .AddJwtBearer(options =>
 {
-    Console.WriteLine("JwtBearer configuration executed");
 
     string secretKey = generalSettings.JwtSettings.Key;
     var keyBytes = Encoding.UTF8.GetBytes(secretKey);
@@ -99,10 +98,7 @@ builder.Services.AddDbContext<MainDataBaseContext>(options =>
     options.UseNpgsql(generalSettings.ConnectionString));
 
 
-
-
 builder.Services.AddSwaggerGen();
-
 
 builder.Services.Configure<GeneralSettings>(configuration.GetSection(GeneralSettings.sectionName));
 var app = builder.Build();

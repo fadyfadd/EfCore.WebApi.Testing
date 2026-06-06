@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(MainDataBaseContext))]
-    partial class MainDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20260606121650_5b2d8e41-6fa3-4c92-bd83-71e4cb9c6f24")]
+    partial class _5b2d8e416fa34c92bd8371e4cb9c6f24
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,8 +30,6 @@ namespace DataAccessLayer.Migrations
             modelBuilder.HasSequence<int>("course_category_sequence");
 
             modelBuilder.HasSequence<int>("course_sequence");
-
-            modelBuilder.HasSequence<int>("student_document_sequence");
 
             modelBuilder.HasSequence<int>("student_sequence");
 
@@ -53,9 +54,9 @@ namespace DataAccessLayer.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id")
-                        .HasDefaultValueSql("nextval('\"student_document_sequence\"')");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DocumentName")
                         .IsRequired()

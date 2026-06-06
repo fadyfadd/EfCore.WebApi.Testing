@@ -13,7 +13,6 @@ public class DefaultProfile : Profile
         CreateMap<BaseCourseCategoryDto, CourseCategory>().ReverseMap();
         CreateMap<CourseCategoryDto, CourseCategory>().ReverseMap();
 
-
         CreateMap<BaseCourseDto, Course>().ReverseMap();
         CreateMap<CourseDto, Course>().ReverseMap();
         CreateMap<CourseWithStudentsDto, Course>().ReverseMap();
@@ -26,5 +25,8 @@ public class DefaultProfile : Profile
 
         CreateMap<BaseApplicationUserDto, ApplicationUser>().ReverseMap();
         CreateMap<ApplicationUserDto, ApplicationUser>().ReverseMap();
+
+        CreateMap<BaseStudentDocumentDto, StudentDocuments>().ReverseMap();
+        CreateMap<StudentDocumentDto, StudentDocuments>().ReverseMap();
     }
 }

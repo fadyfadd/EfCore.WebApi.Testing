@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
- 
+
 namespace Data
 {
     public class MainDataBaseContext : IdentityDbContext<
@@ -43,11 +43,13 @@ namespace Data
                 .StartsAt(1)
                 .IncrementsBy(1);
 
+            builder.HasSequence<int>("student_sequence").StartsAt(1).IncrementsBy(1);
+
             builder.HasSequence<int>("administarator_sequence").StartsAt(1).IncrementsBy(1);
 
-            builder.HasSequence<int>("student_sequence")
-           .StartsAt(1)
-           .IncrementsBy(1);
+            builder.HasSequence<int>("student_document_sequence")
+            .StartsAt(1)
+            .IncrementsBy(1);
 
             builder.ApplyConfigurationsFromAssembly(typeof(MainDataBaseContext).Assembly);
         }

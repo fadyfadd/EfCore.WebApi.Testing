@@ -1,5 +1,7 @@
 ﻿
 
+using Data.Dtos;
+
 namespace Data.Entities
 {
     public class Student
@@ -10,8 +12,8 @@ namespace Data.Entities
         public DateTime EnrolledAt { get; set; }
         public Int32 UserId { get; set; }
         public ApplicationUser User { get; set; }
-
         public ICollection<Course> Courses { get; set; }
+        public ICollection<StudentDocuments> Documents { get; set; }
 
     }
 
