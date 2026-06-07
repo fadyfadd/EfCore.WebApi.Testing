@@ -16,9 +16,9 @@ public class StudentController : ApiBaseController
     }
 
     [HttpPost("addDocument")]
-    public async Task<IActionResult> AddDocument([FromForm] StudentDocumentDto studentDocumentDto, [FromForm] IFormFile file)
+    public async Task<IActionResult> AddDocument([FromForm] StudentDocumentDto studentDocumentDto)
     {
-        var addedDocument = await studentService.AddDocument(studentDocumentDto, file);
+        var addedDocument = await studentService.AddDocument(studentDocumentDto , studentDocumentDto.File);
         return Ok(addedDocument);
     }
 
@@ -34,6 +34,13 @@ public class StudentController : ApiBaseController
             file.ContentType,
             file.FileName);
 
+    }
+
+    [HttpGet("getAllDocumentsForStudent/{studentId}")]
+    public async Task<IActionResult> GetAllDocumentsForStudent([FromRoute] int studentId)
+    {
+        var documents = await studentService.GetAllDocumentsForStudent(studentId);
+        return Ok(documents);
     }
 
     [HttpDelete("deleteDocument/{id}")]

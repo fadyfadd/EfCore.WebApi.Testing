@@ -3,6 +3,7 @@ using Data;
 using Data.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Npgsql.Replication.PgOutput.Messages;
 
@@ -57,6 +58,14 @@ public class StudentService
         return fileDto;
 
     }
+
+
+    public async Task<List<StudentDocumentDto>> GetAllDocumentsForStudent(int studentId)
+    {
+        List<StudentDocument> documents = await dataContext.StudentDocument.Where(d => d.StudentId == studentId).ToListAsync();
+        return mapper.Map<List<StudentDocumentDto>>(documents);
+    }
+
 
     public async Task<StudentDocumentDto> AddDocument(StudentDocumentDto studentDocumentDto, IFormFile file)
     {
