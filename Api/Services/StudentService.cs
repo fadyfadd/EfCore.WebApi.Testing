@@ -24,11 +24,17 @@ public class StudentService
     public async Task DeleteDocument(int documentId)
     {
         var entity = await dataContext.StudentDocument.FindAsync(documentId);
-        var documentUrl = entity.DocumentUrl;
-        File.Delete(documentUrl);
+
 
         if (entity != null)
         {
+            var documentUrl = entity.DocumentUrl;
+
+            if (File.Exists(documentUrl))
+            {
+                File.Delete(documentUrl);
+            }
+
             dataContext.StudentDocument.Remove(entity);
             await dataContext.SaveChangesAsync();
         }
